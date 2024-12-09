@@ -101,7 +101,7 @@ class Policy_Evaluate:
 def run_search(policy_evaluate:Policy_Evaluate, search_method, lb, ub):
     if(search_method == "GA"):
         size_pop = 10
-        run_iter = 40
+        run_iter = 41
         g = GA(policy_evaluate.obj_func, n_dim=len(lb), size_pop=size_pop, max_iter=100000,
                 prob_mut=0.005, lb=lb, ub=ub, precision=1e-5)
         g.run(run_iter)
@@ -116,9 +116,9 @@ def run_search(policy_evaluate:Policy_Evaluate, search_method, lb, ub):
 
     elif(search_method == "PSO"):
         size_pop = 10
-        run_iter = 40
+        run_iter = 41
         p = PSO(func=policy_evaluate.obj_func, n_dim=len(lb), pop=size_pop, max_iter=100000, 
-                    lb=lb, ub=ub, w=0.7, c1=0.5, c2=0.5)
+                    lb=lb, ub=ub, w=0.3, c1=0.5, c2=0.5)
         p.record_mode = True
         p.run(run_iter)
         policy_evaluate.recorder.add(np.array(size_pop), "size_pop")
@@ -140,7 +140,7 @@ def main_run_PSO(args, use_wandb):
         u_overline=args.u_overline,u_underline=args.u_underline, N=args.N,
         money_loss_weight=args.money_loss_weight, d = args.d, use_wandb=use_wandb
     )
-    kappa_range = [-0.5, 0.8]
+    kappa_range = [-0.4, 0.7]
     beta_range = [-1, 0]
     N = args.N
     d = args.d
@@ -160,7 +160,7 @@ def main_run_GA(args, use_wandb):
         money_loss_weight=args.money_loss_weight, d = args.d, use_wandb=use_wandb
     )
 
-    kappa_range = [-0.5, 0.8]
+    kappa_range = [-0.4, 0.7]
     beta_range = [-1, 0]
     N = 68
     d = 4
@@ -180,10 +180,10 @@ def main_run_PSO_GA():
         wandb.init(project="DSGMADDPG-power-system-PSO-GA",
                 config=vars(args),
                 id=time_str())
-    pso_data = main_run_PSO(args, use_wandb)
-    pso_data.save("./record/pso_{}.pkl".format(time_str()))
     ga_data = main_run_GA(args, use_wandb)
     ga_data.save("./record/ga_{}.pkl".format(time_str()))
+    pso_data = main_run_PSO(args, use_wandb)
+    pso_data.save("./record/pso_{}.pkl".format(time_str()))
     if(use_wandb):
         wandb.finish()
     return pso_data, ga_data

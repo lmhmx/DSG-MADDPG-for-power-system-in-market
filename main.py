@@ -87,11 +87,11 @@ def plot_pso_ga_result(pso_recorder:DataRecorder,
     # ga_score_index = ga_size_pop*np.array(range(0, ga_run_iter))
     pso_score_every_iter_max = pso_recorder.get("test_scores")
     ga_score_every_iter_max = ga_recorder.get("test_scores")
-    pso_score_index = pso_score_index = pso_size_pop*np.array(range(pso_run_iter))
+    pso_score_index = pso_size_pop*np.array(range(pso_run_iter))
     ga_score_index = ga_size_pop*np.array(range(ga_run_iter))
     plt.figure()
-    plt.plot(pso_score_index, pso_score_every_iter_max)
-    plt.plot(ga_score_index, ga_score_every_iter_max)
+    plt.plot(pso_score_index, pso_score_every_iter_max.flatten())
+    plt.plot(ga_score_index, ga_score_every_iter_max.flatten())
     plt.xlabel("Iterations")
     plt.ylabel("Return")
     plt.legend(["PSO", "GA"])
@@ -238,7 +238,7 @@ def plot_function_results(k_p, k_m, b_p, b_m, K_linear):
     plt.box(False)
 
     plt.axis([-2, 2, -3, 3])
-    plt.savefig("./fig/{}.png".format(time_str()))
+    plt.savefig("./fig/{}_function.png".format(time_str()))
 
 def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
     if(maddpg_version is None):
@@ -306,6 +306,7 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
     for i in range(len(r_s)):
         plt.plot(np.linspace(0, 200, 21),r_s[i])
     plt.legend(["linear", "2","4","8","12","16","20"])
+    plt.savefig("./fig/{}_test_return.png".format(time_str()))
     k_p = maddpg_recorder.get("k_p")
     k_m = maddpg_recorder.get("k_m")
     b_p = maddpg_recorder.get("b_p")
@@ -334,7 +335,7 @@ if (__name__ == "__main__"):
     # main_plot_controller_result_without_RL(recorder_version=None,
                                         #    dt=0.005,
                                         #    save_mat=False)
-    main_plot_PSO_GA(pso_ga_version=None, save_mat=False)
+    # main_plot_PSO_GA(pso_ga_version=None, save_mat=False)
     # main_plot_DSG_MADDPG(maddpg_version=None, save_mat=False)
 
 
@@ -344,6 +345,6 @@ if (__name__ == "__main__"):
     main_plot_controller_result_without_RL(recorder_version="v_no_rl_001",
                                            dt=0.005,
                                            save_mat=True)
-    # main_plot_PSO_GA(pso_ga_version="v_pso_ga_001", save_mat=True)
+    main_plot_PSO_GA(pso_ga_version="v_pso_ga_001", save_mat=True)
     main_plot_DSG_MADDPG(maddpg_version="v_maddpg_001", save_mat=True)
     

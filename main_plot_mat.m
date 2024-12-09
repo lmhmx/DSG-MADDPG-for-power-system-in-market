@@ -263,17 +263,17 @@ maddpg_returns_d_4 = maddpg_returns(3,:);
 pso_ga_version = "v_pso_ga_001";
 pso_results = load("./useful/"+pso_ga_version+"_pso.mat");
 ga_results = load("./useful/"+pso_ga_version+"_ga.mat");
-pso_returns = -pso_results.test_scores+0.02;
+pso_returns = -pso_results.test_scores;
 ga_returns = -ga_results.test_scores;
 
 colororder([[1,0,0];[0,1,0];[0,0,1]])
 
 plot((0:20)*10, maddpg_returns_d_4, LineWidth=0.9)
-plot((0:39)*10, pso_returns, LineWidth=0.9)
-plot((0:39)*10, ga_returns, LineWidth=0.9)
+plot((0:40)*10, pso_returns, LineWidth=0.9)
+plot((0:40)*10, ga_returns, LineWidth=0.9)
 
-axis([0,400, -0.45,-0.33])
-xticks(linspace(0,400,6))
+axis([0,230, -0.42,-0.33])
+xticks(linspace(0,240,7))
 % yticks(linspace(-0.40,-0.30,5))
 legend(["DSG-MADDPG", "PSO", "GA"],"Location","best",FontSize=18)
 xlabel("Episode")

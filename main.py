@@ -277,7 +277,7 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
         for name in names:
             r = load_wandb(name="GNE_In_Power_System/"+name,
                                 key="test_return")
-            r_s.append(r[0:21])
+            r_s.append(r)
 
         # linear_maddpg_name = "20241206-13-41-48"
         # maddpg_name_d_4    = "20241208-15-26-59"
@@ -285,8 +285,16 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
         k_p, k_m, b_p, b_m = load_model_200_d_4(maddpg_name_d_4)
         K_linear = load_model_200_linear(linear_maddpg_name)
         maddpg_recorder = DataRecorder()
-        for i in range(len(r_s)):
-            maddpg_recorder.add(np.array(r_s[i]), "test_return")
+        # for i in range(len(r_s)):
+        #     maddpg_recorder.add(np.array(r_s[i][0:26]), "test_return")
+        maddpg_recorder.add(np.array(r_s[0]), "test_return_linear")
+        maddpg_recorder.add(np.array(r_s[1]), "test_return_d_2")
+        maddpg_recorder.add(np.array(r_s[2]), "test_return_d_4")
+        maddpg_recorder.add(np.array(r_s[3]), "test_return_d_8")
+        maddpg_recorder.add(np.array(r_s[4]), "test_return_d_12")
+        maddpg_recorder.add(np.array(r_s[5]), "test_return_d_16")
+        maddpg_recorder.add(np.array(r_s[6]), "test_return_d_20")
+
         maddpg_recorder.add(np.array(k_p), "k_p")
         maddpg_recorder.add(np.array(k_m), "k_m")
         maddpg_recorder.add(np.array(b_p), "b_p")
@@ -301,10 +309,18 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
                           ]
         maddpg_recorder = DataRecorder(load_file=recorder_files[0])
     
-    r_s = maddpg_recorder.get("test_return")
+    r_s = [maddpg_recorder.get("test_return_linear"),
+           maddpg_recorder.get("test_return_d_2"),
+           maddpg_recorder.get("test_return_d_4"),
+           maddpg_recorder.get("test_return_d_8"),
+           maddpg_recorder.get("test_return_d_12"),
+           maddpg_recorder.get("test_return_d_16"),
+           maddpg_recorder.get("test_return_d_20")
+           ]
+
     plt.figure()
     for i in range(len(r_s)):
-        plt.plot(np.linspace(0, 200, 21),r_s[i])
+        plt.plot(np.linspace(0, 200, 21),r_s[i][0:21])
     plt.legend(["linear", "2","4","8","12","16","20"])
     plt.savefig("./fig/{}_test_return.png".format(time_str()))
     k_p = maddpg_recorder.get("k_p")
@@ -323,7 +339,7 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
 def load_wandb(name, key):
     api = wandb.Api()
     run = api.run(name)
-    m = run.history(samples=1000)
+    m = run.history(samples=1500)
     data = m[key][m[key].notnull()]
     data = data.tolist()
     return np.array(data)

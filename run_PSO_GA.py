@@ -160,7 +160,7 @@ def main_run_GA(args, use_wandb):
         money_loss_weight=args.money_loss_weight, d = args.d, use_wandb=use_wandb
     )
 
-    kappa_range = [-0.4, 0.7]
+    kappa_range = [-0.5, 0.8]
     beta_range = [-1, 0]
     N = 68
     d = 4

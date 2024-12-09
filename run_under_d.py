@@ -7,7 +7,7 @@ def run_under_d():
 
     code_args = "--use_cmd_args y"+\
                     " --device cuda --gamma 0.999 --polyak 0.95"+\
-                    " --lr 0.005 --batch_size 8192 --epoch 232" + \
+                    " --lr 0.005 --batch_size 8192 --epoch 252" + \
                     " --train_num_every 1" +\
                     " --pre_replay_buffer None"+\
                     " --s_weight 0.0 --u_weight 0.0 --omega_weight 200"+\
@@ -28,7 +28,7 @@ def run_under_d():
     for d in d_s:
         code_args = "--use_cmd_args y"+\
                     " --device cuda --gamma 0.999 --polyak 0.95"+\
-                    " --lr 0.005 --batch_size 8192 --epoch 202" + \
+                    " --lr 0.005 --batch_size 8192 --epoch 252" + \
                     " --train_num_every 1" +\
                     " --pre_replay_buffer None"+\
                     " --s_weight 0.0 --u_weight 0.0 --omega_weight 200"+\

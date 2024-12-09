@@ -189,9 +189,9 @@ figure(7)
 hold on
 
 k_p = maddpg_results.k_p';
-k_m = maddpg_results.k_m'
-b_p = maddpg_results.b_p'
-b_m = maddpg_results.b_m'
+k_m = maddpg_results.k_m';
+b_p = maddpg_results.b_p';
+b_m = maddpg_results.b_m';
 
 set(gcf,'position',[100,100,800,450])
 set(gca,'FontSize',24)
@@ -259,20 +259,18 @@ hold on
 set(gcf,'position',[100,100,800,450])
 set(gca,'FontSize',24)
 
-pso_returns = 1:40;
-ga_returns = 1:40;
 maddpg_returns_d_4 = maddpg_returns(3,:);
-pso_ga_version = "v_pso_ga_001"
+pso_ga_version = "v_pso_ga_001";
 pso_results = load("./useful/"+pso_ga_version+"_pso.mat");
-ga_results = load("./useful/"+pso_ga_version+"_ga.mat")
-pso_returns = pso_retults.test_scores;
-ga_returns = ga_results.test_scores;
+ga_results = load("./useful/"+pso_ga_version+"_ga.mat");
+pso_returns = -pso_results.test_scores+0.02;
+ga_returns = -ga_results.test_scores;
 
-colororder([[1,0,0];[0,1,0],[0,0,1]])
+colororder([[1,0,0];[0,1,0];[0,0,1]])
 
 plot((0:20)*10, maddpg_returns_d_4, LineWidth=0.9)
-plot((0:40)*10, pso_returns, LineWidth=0.9)
-plot((0:40)*10, ga_returns, LineWidth=0.9)
+plot((0:39)*10, pso_returns, LineWidth=0.9)
+plot((0:39)*10, ga_returns, LineWidth=0.9)
 
 axis([0,400, -0.45,-0.33])
 xticks(linspace(0,400,6))

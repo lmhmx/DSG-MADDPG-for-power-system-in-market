@@ -7,4 +7,5 @@ def init_work_space():
             os.mkdir(dir)
             print("Create dir \"{}\"".format(dir))
     
-    
+if(__name__=="__main__"):
+    init_work_space()

@@ -180,8 +180,10 @@ def main_run_PSO_GA():
         wandb.init(project="DSGMADDPG-power-system-PSO-GA",
                 config=vars(args),
                 id=time_str())
-    ga_data = main_run_GA(args, use_wandb)
     pso_data = main_run_PSO(args, use_wandb)
+    pso_data.save("./record/pso_{}.pkl".format(time_str()))
+    ga_data = main_run_GA(args, use_wandb)
+    ga_data.save("./record/ga_{}.pkl".format(time_str()))
     if(use_wandb):
         wandb.finish()
     return pso_data, ga_data

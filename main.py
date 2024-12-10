@@ -348,11 +348,11 @@ def load_wandb(name, key):
 if (__name__ == "__main__"):
     init_work_space()
 
-    # main_plot_controller_result_without_RL(recorder_version=None,
-                                        #    dt=0.005,
-                                        #    save_mat=False)
-    # main_plot_PSO_GA(pso_ga_version=None, save_mat=False)
-    # main_plot_DSG_MADDPG(maddpg_version=None, save_mat=False)
+    main_plot_controller_result_without_RL(recorder_version=None,
+                                           dt=0.005,
+                                           save_mat=False)
+    main_plot_PSO_GA(pso_ga_version=None, save_mat=False)
+    main_plot_DSG_MADDPG(maddpg_version=None, save_mat=False)
 
 
     # This is used to plot the figures from results that have been stored.

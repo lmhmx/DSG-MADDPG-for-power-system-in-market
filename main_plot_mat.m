@@ -147,7 +147,15 @@ set(gcf,'position',[100,100,800,450])
 set(gca,'FontSize',24)
 maddpg_results = load("./useful/v_maddpg_001.mat");
 
-maddpg_returns = maddpg_results.test_return;
+maddpg_returns = [
+                    maddpg_results.test_return_linear;
+                    maddpg_results.test_return_d_2(1:25);
+                    maddpg_results.test_return_d_4(1:25);
+                    maddpg_results.test_return_d_8(1:25);
+                    maddpg_results.test_return_d_12(1:25);
+                    maddpg_results.test_return_d_16(1:25);
+                    maddpg_results.test_return_d_20(1:25);
+                ];
 
 blues_color=[
 [0.7161860822760477,0.8332026143790849,0.916155324875048];
@@ -157,19 +165,27 @@ blues_color=[
 [0.10557477893118032,0.41262591311034214,0.6859669357939254];
 [0.03137254901960784,0.2897347174163783,0.570319108035371];];
 
+blues_color=1/255*[
+                    064 000 075;
+                    139 085 155;
+                    202 175 212;
+                    194 230 188;
+                    086 170 094;
+                    009 086 036;
+                    ];
 
 % blues_color = flip(blues_color);
 % colororder([[1,0,0];[0,0,0.4];[0,0,0.5];[0,0,0.6];[0,0,0.7];[0,0,0.8];[0,0,1]])
 colororder([[1,0,0];blues_color])
 % colororder(map)
 % monotone_colors = [[0,0,0.2];[0,0,0.4];[0,0,0.6];[0,0,0.7];[0,0,0.8];[0,0,1]]
-plot((0:20)*10, maddpg_returns(1,:), LineWidth=0.9)
-plot((0:20)*10, maddpg_returns(2,:), LineWidth=0.9)
-plot((0:20)*10, maddpg_returns(3,:), LineWidth=0.9)
-plot((0:20)*10, maddpg_returns(4,:), LineWidth=0.9)
-plot((0:20)*10, maddpg_returns(5,:), LineWidth=0.9)
-plot((0:20)*10, maddpg_returns(6,:), LineWidth=0.9)
-plot((0:20)*10, maddpg_returns(7,:), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(1,1:21), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(2,1:21), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(3,1:21), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(4,1:21), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(5,1:21), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(6,1:21), LineWidth=0.9)
+plot((0:20)*10, maddpg_returns(7,1:21), LineWidth=0.9)
 axis([0,200, -0.41,-0.33])
 xticks(linspace(0,200,6))
 % yticks(linspace(-0.40,-0.30,5))
@@ -259,7 +275,7 @@ hold on
 set(gcf,'position',[100,100,800,450])
 set(gca,'FontSize',24)
 
-maddpg_returns_d_4 = maddpg_returns(3,:);
+maddpg_returns_d_4 = maddpg_results.test_return_d_4;
 pso_ga_version = "v_pso_ga_001";
 pso_results = load("./useful/"+pso_ga_version+"_pso.mat");
 ga_results = load("./useful/"+pso_ga_version+"_ga.mat");
@@ -268,16 +284,16 @@ ga_returns = -ga_results.test_scores;
 
 colororder([[1,0,0];[0,1,0];[0,0,1]])
 
-plot((0:20)*10, maddpg_returns_d_4, LineWidth=0.9)
-plot((0:40)*10, pso_returns, LineWidth=0.9)
-plot((0:40)*10, ga_returns, LineWidth=0.9)
+plot((0:25)*10, -maddpg_returns_d_4(1:26), LineWidth=0.9)
+plot((0:40)*10, -pso_returns, LineWidth=0.9)
+plot((0:40)*10, -ga_returns, LineWidth=0.9)
 
-axis([0,230, -0.42,-0.33])
+axis([0,250, 0.33, 0.44])
 xticks(linspace(0,240,7))
 % yticks(linspace(-0.40,-0.30,5))
 legend(["DSG-MADDPG", "PSO", "GA"],"Location","best",FontSize=18)
 xlabel("Episode")
-ylabel("Return")
+ylabel("Loss")
 
 
 function y=f_monotone(x, k_p, k_m, b_p, b_m)

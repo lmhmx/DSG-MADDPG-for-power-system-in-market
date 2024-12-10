@@ -258,12 +258,12 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
         maddpg_name_d_20   = dir_names[-5]
 
         # linear_maddpg_name = "20241206-13-41-45"
-        # maddpg_name_d_2    = "20241206-16-20-25"
-        # maddpg_name_d_4    = "20241208-15-26-56"
-        # maddpg_name_d_8    = "20241206-21-33-35"
-        # maddpg_name_d_12   = "20241207-19-46-33"
-        # maddpg_name_d_16   = "20241207-19-46-33"
-        # maddpg_name_d_20   = "20241207-19-46-33"
+        # maddpg_name_d_2    = "20241209-22-19-35"
+        # maddpg_name_d_4    = "20241209-22-19-35"
+        # maddpg_name_d_8    = "20241209-22-19-35"
+        # maddpg_name_d_12   = "20241209-22-19-35"
+        # maddpg_name_d_16   = "20241209-22-19-35"
+        # maddpg_name_d_20   = "20241209-22-19-35"
 
         names = [   linear_maddpg_name,
                     maddpg_name_d_2   ,
@@ -320,7 +320,7 @@ def main_plot_DSG_MADDPG(maddpg_version = "v_001", save_mat=True):
 
     plt.figure()
     for i in range(len(r_s)):
-        plt.plot(np.linspace(0, 200, 21),r_s[i][0:21])
+        plt.plot(np.linspace(0, 200, 21),r_s[i][0, 0:21])
     plt.legend(["linear", "2","4","8","12","16","20"])
     plt.savefig("./fig/{}_test_return.png".format(time_str()))
     k_p = maddpg_recorder.get("k_p")
@@ -348,11 +348,11 @@ def load_wandb(name, key):
 if (__name__ == "__main__"):
     init_work_space()
 
-    # main_plot_controller_result_without_RL(recorder_version=None,
-                                        #    dt=0.005,
-                                        #    save_mat=False)
-    # main_plot_PSO_GA(pso_ga_version=None, save_mat=False)
-    # main_plot_DSG_MADDPG(maddpg_version=None, save_mat=False)
+    main_plot_controller_result_without_RL(recorder_version=None,
+                                           dt=0.005,
+                                           save_mat=False)
+    main_plot_PSO_GA(pso_ga_version=None, save_mat=False)
+    main_plot_DSG_MADDPG(maddpg_version=None, save_mat=False)
 
 
     # This is used to plot the figures from results that have been stored.

@@ -519,7 +519,7 @@ if(__name__ == "__main__"):
                  use_linear_policy=args.use_linear_policy,
                  money_loss_weight=args.money_loss_weight,
                  replay_buffer_size=args.replay_buffer_size,
-                 d=args.d)
+                 d=args.d, save_path=wandb_id)
     if(args.run_train_only):
         ma.run_train_only(epoch=args.epoch, batch_size=args.batch_size, train_num_every=args.train_num_every)
     elif(args.run_data_only):
